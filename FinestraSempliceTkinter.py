@@ -19,7 +19,7 @@ def animate_change(action):
     while end - start < 1:
         root.configure(bg=bg_color)
         end = time.time()
-        temp_label.config(text=str(temperature),bg=bg_color)
+        temp_label.config(text=str(temperature)+"°C",bg=bg_color)
         status_label.config(text=vector[i % 4],bg=bg_color)
         root.update()
         i += 1
@@ -42,7 +42,7 @@ status_font = font.Font(family="Helvetica", size=50)
 temperature = 18
 
 # Crea e posiziona gli elementi
-temp_label = tk.Label(root, text=str(temperature), font=temp_font, fg="white",bg="green")
+temp_label = tk.Label(root, text=str(temperature)+"°C", font=temp_font, fg="white",bg="green")
 temp_label.place(relx=0.5, rely=0.5, anchor=tk.CENTER)
 
 status_label = tk.Label(root, text="", font=status_font, fg="white",bg="green")
