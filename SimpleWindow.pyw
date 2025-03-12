@@ -5,6 +5,8 @@ import time
 # Imposta dimensioni della finestra
 WIDTH, HEIGHT = 400, 300
 
+#Hi! this is a test
+
 def update_temperature(change):
     global temperature
     temperature += change
