@@ -60,7 +60,7 @@ predictor = dlib.shape_predictor(predictor_path)
 # Attesa della connessione
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(("localhost", 12345))
-server.listen(1)
+server.listen(0)
 print("In attesa di connessioni...")
 
 conn, addr = server.accept()
@@ -69,7 +69,10 @@ print(f"Connessione da {addr}")
 # Avvio del video stream
 print("[INFO] starting video stream...")
 #vs = VideoStream(src=args["webcam"]).start()
-vs = VideoStream(src=0).start() # my system's webcam index 
+#vs = VideoStream(src=0).start() # my system's webcam index 
+vs = VideoStream(src=0, usePiCamera=False).start() # my system's webcam index 
+
+
 #webcam_index,_ = AutoWebCamFinder()
 #vs = VideoStream(src=webcam_index).start()
 time.sleep(1.0)
