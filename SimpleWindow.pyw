@@ -1,10 +1,12 @@
 import tkinter as tk
 from tkinter import font
 import time
-
+import socket
 # Imposta dimensioni della finestra
 WIDTH, HEIGHT = 400, 300
 
+
+client.close()
 #Hi! this is a test
 
 def update_temperature(change):
@@ -53,6 +55,10 @@ status_label.place(relx=0.5, rely=0.3, anchor=tk.CENTER)
 # Bind dei tasti
 root.bind("0", lambda event: update_temperature(1))
 root.bind("1", lambda event: update_temperature(-1))
+
+# Connessione al detector
+client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+client.connect(("localhost", 12345))
 
 # Avvia il loop principale
 root.mainloop()

@@ -7,6 +7,17 @@ import numpy as np
 from scipy.spatial import distance as dist
 from imutils.video import VideoStream
 from imutils import face_utils
+import socket
+import os
+
+def AutoWebCamFinder():
+    index = 0
+    while index < 100:  # Prova fino a 10 dispositivi
+        cap = cv2.VideoCapture(index)
+        if cap.read()[0]:  # Se la webcam risponde
+            print(f"Webcam trovata all'indice: {index}")
+            return index,cap.release()
+        index += 1
 
 # Funzione per calcolare l'eye aspect ratio (EAR)
 def eye_aspect_ratio(eye):
@@ -17,12 +28,13 @@ def eye_aspect_ratio(eye):
     return ear
 
 # Argomenti
-ap = argparse.ArgumentParser()
-ap.add_argument("-p", "--shape-predictor", required=True,
-                help="path to facial landmark predictor")
-ap.add_argument("-w", "--webcam", type=int, default=0,
-                help="index of webcam on system")
-args = vars(ap.parse_args())
+
+# ap = argparse.ArgumentParser()
+# ap.add_argument("-p", "--shape-predictor", required=True,
+#                 help="path to facial landmark predictor")
+# ap.add_argument("-w", "--webcam", type=int, default=0,
+#                 help="index of webcam on system")
+# args = vars(ap.parse_args())
 
 # Soglia e numero di frame consecutivi
 EYE_AR_THRESH = 0.3
@@ -36,16 +48,34 @@ OPEN_FRAMES = 0
 # Caricamento del rilevatore di volti e predittore di punti
 print("[INFO] loading facial landmark predictor...")
 detector = dlib.get_frontal_face_detector()
-predictor = dlib.shape_predictor(args["shape_predictor"])
+# predictor = dlib.shape_predictor(args["shape_predictor"])
+# predictor = dlib.shape_predictor("shape_predictor_68_face_landmarks.dat")
+predictor_path = os.path.join(os.path.dirname(__file__), "shape_predictor_68_face_landmarks.dat")
+predictor = dlib.shape_predictor(predictor_path)
 
 # Indici degli occhi
 (lStart, lEnd) = face_utils.FACIAL_LANDMARKS_IDXS["left_eye"]
 (rStart, rEnd) = face_utils.FACIAL_LANDMARKS_IDXS["right_eye"]
 
+# Attesa della connessione
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind(("localhost", 12345))
+server.listen(1)
+print("In attesa di connessioni...")
+
+conn, addr = server.accept()
+print(f"Connessione da {addr}")
+
 # Avvio del video stream
 print("[INFO] starting video stream...")
-vs = VideoStream(src=args["webcam"]).start()
+#vs = VideoStream(src=args["webcam"]).start()
+vs = VideoStream(src=0).start() # my system's webcam index 
+#webcam_index,_ = AutoWebCamFinder()
+#vs = VideoStream(src=webcam_index).start()
 time.sleep(1.0)
+
+
+
 
 while True:
     frame = vs.read()
@@ -73,7 +103,11 @@ while True:
 
             if COUNTER >= EYE_AR_CONSEC_FRAMES:
                 # Placeholder per funzione personalizzata
-                trigger_drowsiness_function()
+                #trigger_drowsiness_function()
+
+                msg = "DROWSY"
+                conn.send(msg.encode())
+
                 cv2.putText(frame, "DROWSINESS ALERT!", (10, 30),
                             cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 0, 255), 2)
         else:
@@ -89,6 +123,7 @@ while True:
     key = cv2.waitKey(1) & 0xFF
     if key == ord("q"):
         break
-
+conn.close()
+server.close()
 cv2.destroyAllWindows()
 vs.stop()
