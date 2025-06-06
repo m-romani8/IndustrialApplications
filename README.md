@@ -1,6 +1,6 @@
 # ClimaSense: Intelligent In-Cabin Climate Control
 
-![ClimaSense Logo](Images/ClimaSense logo.png)
+<img src="./Images/ClimaSense logo.png">
 
 **ClimaSense** is an innovative project aimed at developing a fully automated in-car air conditioning system. The core idea is to create a smart climate control that requires minimal to no driver intervention beyond an initial activation, ensuring optimal comfort and a safer driving experience.
 
@@ -17,7 +17,7 @@ Modern vehicles offer sophisticated climate control, but often still require man
 
 As a key additional feature and part of our current prototyping efforts, we are integrating a driver drowsiness detection system. This system is designed to enhance safety by alerting or taking action if the driver shows signs of fatigue.
 
-![Raspberry Pi Logo](./Images/Raspberry logo.png)
+<img src="./Images/Raspberry logo.png">
 *(Prototyping often involves platforms like Raspberry Pi)*
 
 ### How it Works:
