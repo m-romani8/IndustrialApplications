@@ -1,6 +1,6 @@
 # ClimaSense: Intelligent In-Cabin Climate Control
 
-![ClimaSense Logo](./Images/ClimaSense logo.png)
+![ClimaSense Logo](Images/ClimaSense logo.png)
 
 **ClimaSense** is an innovative project aimed at developing a fully automated in-car air conditioning system. The core idea is to create a smart climate control that requires minimal to no driver intervention beyond an initial activation, ensuring optimal comfort and a safer driving experience.
 
