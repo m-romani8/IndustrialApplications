@@ -1,6 +1,6 @@
 # ClimaSense: Intelligent In-Cabin Climate Control
 
-<div style="width:100%; display:flex; justify-content:center;">
+<div style="width:100vh; display:flex; flex-direction:column; justify-content:center;">
 <img src="./Images/ClimaSense logo.png">
 </div>
 
